@@ -53,7 +53,7 @@ src/
 
 ```bash
 # Clone o repositório
-git clone [URL_DO_REPOSITÓRIO]
+git clone [https://github.com/CaioLucasNS/clean-arch-template-rct-native]
 
 # Instale as dependências
 npm install
@@ -166,6 +166,6 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 📧 Contato
 
-Seu Nome - [@seu_twitter](https://twitter.com/seu_twitter) - email@exemplo.com
+Caio Lucas - [Linkedin - Caio Lucas](https://www.linkedin.com/in/caio-lucas-848653186/) - lcaio1281@gmail.com
 
-Link do Projeto: [https://github.com/seu-usuario/seu-repositorio](https://github.com/seu-usuario/seu-repositorio)
+Link do Projeto: [clean-arch-template-rct-native](https://github.com/CaioLucasNS/clean-arch-template-rct-native)
