@@ -4,17 +4,52 @@ import {
   Theme as NavigationTheme,
 } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
 import { TaskHistoryScreen } from "../screens/TaskHistoryScreen";
 import { HomeScreen } from "../screens/HomeScreen";
 import { SettingsScreen } from "../screens/SettingsScreen";
+import { CreateTaskScreen } from "../screens/CreateTaskScreen";
 import { useTheme } from "../../shared/theme/ThemeContext";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 interface AppNavigatorProps {
   theme: NavigationTheme;
 }
+
+const HomeStack = () => {
+  const { theme } = useTheme();
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: theme.colors.card,
+        },
+        headerTintColor: theme.colors.text,
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
+      }}
+    >
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CreateTask"
+        component={CreateTaskScreen}
+        options={{
+          title: "Nova Task",
+          presentation: "modal",
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 export const AppNavigator: React.FC<AppNavigatorProps> = ({ theme }) => {
   const { theme: appTheme } = useTheme();
@@ -55,9 +90,10 @@ export const AppNavigator: React.FC<AppNavigatorProps> = ({ theme }) => {
       >
         <Tab.Screen
           name="Home"
-          component={HomeScreen}
+          component={HomeStack}
           options={{
             title: "Tasks",
+            headerShown: false,
           }}
         />
         <Tab.Screen
