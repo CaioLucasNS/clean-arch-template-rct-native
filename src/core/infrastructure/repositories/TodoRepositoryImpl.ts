@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Todo, TodoRepository } from "../../domain/entities/Todo";
+import { Todo, TodoRepository } from "@core/domain/entities/Todo";
 
 export class TodoRepositoryImpl implements TodoRepository {
   private readonly STORAGE_KEY = "@todos";
@@ -15,7 +15,7 @@ export class TodoRepositoryImpl implements TodoRepository {
   }
 
   async create(
-    todoData: Omit<Todo, "id" | "createdAt" | "updatedAt">
+    todoData: Omit<Todo, "id" | "createdAt" | "updatedAt">,
   ): Promise<Todo> {
     const todos = await this.findAll();
     const newTodo: Todo = {
@@ -27,7 +27,7 @@ export class TodoRepositoryImpl implements TodoRepository {
 
     await AsyncStorage.setItem(
       this.STORAGE_KEY,
-      JSON.stringify([...todos, newTodo])
+      JSON.stringify([...todos, newTodo]),
     );
     return newTodo;
   }

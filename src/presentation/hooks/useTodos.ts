@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
-import { Todo } from "../../core/domain/entities/Todo";
-import { TodoRepositoryImpl } from "../../core/infrastructure/repositories/TodoRepositoryImpl";
-import { GetTodosUseCase } from "../../core/application/useCases/todo/GetTodosUseCase";
+import { Todo } from "@core/domain/entities/Todo";
+import { TodoRepositoryImpl } from "@core/infrastructure/repositories/TodoRepositoryImpl";
+import { GetTodosUseCase } from "@core/application/useCases/todo/GetTodosUseCase";
 
 export const useTodos = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -39,7 +39,7 @@ export const useTodos = () => {
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   const updateTodo = useCallback(
@@ -49,7 +49,7 @@ export const useTodos = () => {
         setError(null);
         const updatedTodo = await repository.update(id, todoData);
         setTodos((prev) =>
-          prev.map((todo) => (todo.id === id ? updatedTodo : todo))
+          prev.map((todo) => (todo.id === id ? updatedTodo : todo)),
         );
         return updatedTodo;
       } catch (err) {
@@ -59,7 +59,7 @@ export const useTodos = () => {
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   const deleteTodo = useCallback(async (id: string) => {

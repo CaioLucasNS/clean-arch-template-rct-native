@@ -11,10 +11,11 @@ import {
   Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useTheme } from "../../shared/theme/ThemeContext";
-import { TaskService } from "../../core/services/TaskService";
-import { Task } from "../../core/models/Task";
+import { useTheme } from "@shared/theme/ThemeContext";
+import { TaskService } from "@core/services/TaskService";
+import { Task } from "@core/models/Task";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 export const CreateTaskScreen = () => {
   const { theme } = useTheme();

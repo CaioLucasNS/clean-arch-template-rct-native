@@ -64,6 +64,92 @@ src/
     └── utils/           # Funções utilitárias
 ```
 
+## 🗺️ Path Mapping
+
+O projeto utiliza path mapping para melhorar a organização e facilitar as importações. Isso permite importar módulos usando aliases em vez de caminhos relativos.
+
+### Aliases Configurados
+
+- `@core/*` -> `src/core/*`
+- `@data/*` -> `src/data/*`
+- `@presentation/*` -> `src/presentation/*`
+- `@shared/*` -> `src/shared/*`
+- `@assets/*` -> `assets/*`
+
+### Exemplo de Uso
+
+```typescript
+// Antes
+import { Task } from "../../core/models/Task";
+import { useTheme } from "../../shared/theme/ThemeContext";
+
+// Depois
+import { Task } from "@core/models/Task";
+import { useTheme } from "@shared/theme/ThemeContext";
+```
+
+### Configuração
+
+O path mapping está configurado em dois arquivos:
+
+1. `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@core/*": ["src/core/*"],
+      "@data/*": ["src/data/*"],
+      "@presentation/*": ["src/presentation/*"],
+      "@shared/*": ["src/shared/*"],
+      "@assets/*": ["assets/*"]
+    }
+  }
+}
+```
+
+2. `babel.config.js`:
+
+```javascript
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: ["babel-preset-expo"],
+    plugins: [
+      [
+        "module-resolver",
+        {
+          root: ["./"],
+          alias: {
+            "@core": "./src/core",
+            "@data": "./src/data",
+            "@presentation": "./src/presentation",
+            "@shared": "./src/shared",
+            "@assets": "./assets",
+          },
+        },
+      ],
+    ],
+  };
+};
+```
+
+### Dependências Necessárias
+
+Para que o path mapping funcione corretamente, é necessário ter a seguinte dependência instalada:
+
+```bash
+npm install --save-dev babel-plugin-module-resolver
+```
+
+### Observações
+
+- Após fazer alterações nas configurações de path mapping, é necessário reiniciar o servidor de desenvolvimento
+- Em caso de problemas com o cache, execute `npm start -- --reset-cache`
+- O path mapping funciona tanto para arquivos TypeScript quanto para JavaScript
+- É recomendado usar os aliases em vez de caminhos relativos para manter o código mais limpo e fácil de manter
+
 ## 🎨 Tema e Estilização
 
 O projeto utiliza um sistema de temas centralizado para manter a consistência visual. O tema é definido em `src/shared/theme/theme.ts` e inclui:

@@ -8,9 +8,9 @@ import {
   Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useTheme } from "../../shared/theme/ThemeContext";
-import { Task } from "../../core/models/Task";
-import { TaskService } from "../../core/services/TaskService";
+import { useTheme } from "@shared/theme/ThemeContext";
+import { Task } from "@core/models/Task";
+import { TaskService } from "@core/services/TaskService";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
@@ -27,7 +27,7 @@ const HomeScreen = () => {
   useFocusEffect(
     React.useCallback(() => {
       loadTasks();
-    }, [])
+    }, []),
   );
 
   const handleCompleteTask = async (taskId: string) => {

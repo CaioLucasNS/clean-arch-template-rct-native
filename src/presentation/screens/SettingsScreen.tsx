@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useTheme } from "../../shared/theme/ThemeContext";
+import { useTheme } from "@shared/theme/ThemeContext";
 
 const SettingsScreen = () => {
   const { theme, isDark, toggleTheme } = useTheme();

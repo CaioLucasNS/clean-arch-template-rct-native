@@ -6,9 +6,10 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { Todo } from "../../core/domain/entities/Todo";
-import { GetTodosUseCase } from "../../core/application/useCases/todo/GetTodosUseCase";
-import { TodoRepositoryImpl } from "../../core/infrastructure/repositories/TodoRepositoryImpl";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Todo } from "@core/domain/entities/Todo";
+import { GetTodosUseCase } from "@core/application/useCases/todo/GetTodosUseCase";
+import { TodoRepositoryImpl } from "@core/infrastructure/repositories/TodoRepositoryImpl";
 
 export const TodoListScreen: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);

@@ -6,11 +6,11 @@ import {
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
-import { TaskHistoryScreen } from "../screens/TaskHistoryScreen";
-import { HomeScreen } from "../screens/HomeScreen";
-import { SettingsScreen } from "../screens/SettingsScreen";
-import { CreateTaskScreen } from "../screens/CreateTaskScreen";
-import { useTheme } from "../../shared/theme/ThemeContext";
+import { TaskHistoryScreen } from "@presentation/screens/TaskHistoryScreen";
+import { HomeScreen } from "@presentation/screens/HomeScreen";
+import { SettingsScreen } from "@presentation/screens/SettingsScreen";
+import { CreateTaskScreen } from "@presentation/screens/CreateTaskScreen";
+import { useTheme } from "@shared/theme/ThemeContext";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Task } from "../models/Task";
+import { Task } from "@core/models/Task";
 
 const TASKS_STORAGE_KEY = "@tasks";
 
@@ -52,7 +52,7 @@ export class TaskService {
       const filteredTasks = tasks.filter((task) => task.id !== taskId);
       await AsyncStorage.setItem(
         TASKS_STORAGE_KEY,
-        JSON.stringify(filteredTasks)
+        JSON.stringify(filteredTasks),
       );
     } catch (error) {
       console.error("Erro ao deletar task:", error);
