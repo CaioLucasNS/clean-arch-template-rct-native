@@ -75,7 +75,7 @@ const HomeScreen = () => {
     >
       <View style={styles.content}>
         <Text style={[styles.title, { color: theme.colors.text }]}>
-          Minhas Tarefas
+          Minhas Tarefas - Rayelly
         </Text>
 
         <FlatList
