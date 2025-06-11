@@ -1,171 +1,315 @@
-# Template Clean Architecture para React Native
+# Clean Architecture Template for React Native
 
-Este é um template baseado nos princípios da Clean Architecture para projetos React Native. O objetivo é fornecer uma estrutura organizada e escalável para o desenvolvimento de aplicações móveis.
+Este template foi criado para servir como base para projetos React Native seguindo os princípios da Clean Architecture, oferecendo uma estrutura organizada, escalável e de fácil manutenção.
+
+## 🚀 Tecnologias
+
+- [React Native](https://reactnative.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Expo](https://expo.dev/)
+- [React Navigation](https://reactnavigation.org/)
+- [AsyncStorage](https://react-native-async-storage.github.io/async-storage/)
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+
+## 📋 Pré-requisitos
+
+- Node.js (versão LTS recomendada)
+- npm ou yarn
+- Expo CLI
+- Android Studio (para desenvolvimento Android)
+- Xcode (para desenvolvimento iOS, apenas em macOS)
+
+## 🔧 Instalação
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/seu-usuario/clean-arch-template-rct-native.git
+```
+
+2. Instale as dependências:
+
+```bash
+npm install
+# ou
+yarn install
+```
+
+3. Inicie o projeto:
+
+```bash
+npm start
+# ou
+yarn start
+```
 
 ## 🏗️ Estrutura do Projeto
 
 ```
 src/
-├── core/
-│   ├── domain/           # Entidades e regras de negócio
-│   ├── application/      # Casos de uso
-│   └── infrastructure/   # Implementações de repositórios
-├── presentation/         # Componentes de UI e hooks
+├── core/                 # Lógica de negócios e regras de domínio
+│   ├── domain/          # Entidades e interfaces
+│   ├── usecases/        # Casos de uso da aplicação
+│   └── repositories/    # Interfaces dos repositórios
+├── data/                # Implementação da camada de dados
+│   ├── repositories/    # Implementações dos repositórios
+│   └── datasources/     # Fontes de dados (local, remoto)
+├── presentation/        # Camada de apresentação
 │   ├── screens/         # Telas da aplicação
 │   ├── components/      # Componentes reutilizáveis
-│   ├── hooks/          # Hooks personalizados
-│   └── utils/          # Utilitários da UI
-└── shared/             # Código compartilhado
-    ├── constants/      # Constantes
-    ├── types/         # Tipos compartilhados
-    └── utils/         # Utilitários gerais
+│   └── viewmodels/      # ViewModels para gerenciamento de estado
+└── shared/              # Utilitários e configurações compartilhadas
+    ├── theme/           # Configurações de tema
+    └── utils/           # Funções utilitárias
 ```
 
-## 🎯 Princípios da Clean Architecture
+## 🎨 Tema e Estilização
 
-1. **Independência de Frameworks**
+O projeto utiliza um sistema de temas centralizado para manter a consistência visual. O tema é definido em `src/shared/theme/theme.ts` e inclui:
 
-   - A camada de domínio é independente de qualquer framework
-   - Regras de negócio não dependem de detalhes externos
+- Cores
+- Tipografia
+- Espaçamentos
+- Bordas
+- Sombras
 
-2. **Testabilidade**
-
-   - Cada camada pode ser testada isoladamente
-   - Fácil mockar dependências para testes
-
-3. **Independência de UI**
-
-   - Interface do usuário pode mudar sem afetar o resto do sistema
-   - UI é uma camada de detalhe
-
-4. **Independência de Banco de Dados**
-
-   - Regras de negócio não dependem do banco de dados
-   - Fácil trocar o banco de dados sem afetar a lógica
-
-5. **Independência de Agentes Externos**
-   - Regras de negócio não conhecem o mundo exterior
-   - Dependências apontam para dentro
-
-## 📦 Como Usar
-
-### 1. Instalação
-
-```bash
-# Clone o repositório
-git clone [https://github.com/CaioLucasNS/clean-arch-template-rct-native]
-
-# Instale as dependências
-npm install
-```
-
-### 2. Estrutura de Camadas
-
-#### Camada de Domínio
+### Exemplo de Uso do Tema
 
 ```typescript
-// src/core/domain/entities/Exemplo.ts
-export interface Exemplo {
-  id: string;
-  // propriedades da entidade
-}
+import { useTheme } from '@shared/theme/theme';
 
-export interface ExemploRepository {
-  // métodos do repositório
-}
-```
+const MyComponent = () => {
+  const { colors, spacing } = useTheme();
 
-#### Camada de Aplicação
-
-```typescript
-// src/core/application/useCases/exemplo/ExemploUseCase.ts
-export class ExemploUseCase {
-  constructor(private repository: ExemploRepository) {}
-
-  async execute(): Promise<void> {
-    // lógica do caso de uso
-  }
-}
-```
-
-#### Camada de Infraestrutura
-
-```typescript
-// src/core/infrastructure/repositories/ExemploRepositoryImpl.ts
-export class ExemploRepositoryImpl implements ExemploRepository {
-  // implementação dos métodos
-}
-```
-
-#### Camada de Apresentação
-
-```typescript
-// src/presentation/screens/ExemploScreen.tsx
-export const ExemploScreen: React.FC = () => {
-  // implementação da tela
+  return (
+    <View style={{
+      backgroundColor: colors.background,
+      padding: spacing.medium
+    }}>
+      <Text style={{ color: colors.text }}>
+        Conteúdo do componente
+      </Text>
+    </View>
+  );
 };
 ```
 
-### 3. Criando um Novo Recurso
+## 📱 Navegação
 
-1. **Defina a Entidade**
+A navegação é implementada usando React Navigation com um sistema de tabs. A configuração principal está em `src/presentation/navigation/AppNavigator.tsx`.
 
-   - Crie a interface da entidade em `domain/entities`
-   - Defina a interface do repositório
+### Estrutura de Navegação
 
-2. **Implemente os Casos de Uso**
+- Tab Navigator (Navegação principal)
+  - Home Tab
+  - History Tab
+  - Settings Tab
 
-   - Crie os casos de uso em `application/useCases`
-   - Implemente a lógica de negócio
+### Exemplo de Navegação
 
-3. **Crie o Repositório**
+```typescript
+import { useNavigation } from '@react-navigation/native';
 
-   - Implemente o repositório em `infrastructure/repositories`
-   - Conecte com a fonte de dados
+const MyScreen = () => {
+  const navigation = useNavigation();
 
-4. **Desenvolva a UI**
-   - Crie os componentes em `presentation`
-   - Implemente os hooks necessários
+  const handleNavigate = () => {
+    navigation.navigate('Details', { id: 123 });
+  };
 
-## 🛠️ Tecnologias Utilizadas
+  return (
+    <Button onPress={handleNavigate} title="Ir para Detalhes" />
+  );
+};
+```
 
-- React Native
-- TypeScript
-- Expo
-- AsyncStorage (para persistência local)
+## 💾 Persistência de Dados
 
-## 📝 Exemplo de Uso
+O projeto utiliza AsyncStorage para persistência local de dados. A implementação está em `src/data/repositories/AsyncStorageRepository.ts`.
 
-O projeto inclui um exemplo de implementação de uma lista de tarefas (Todo List) que demonstra:
+### Exemplo de Uso
 
-- Gerenciamento de estado
-- Persistência local
-- Navegação
-- Componentes reutilizáveis
-- Hooks personalizados
+```typescript
+import { useTaskRepository } from '@core/repositories/TaskRepository';
+
+const MyComponent = () => {
+  const taskRepository = useTaskRepository();
+
+  const saveTask = async () => {
+    await taskRepository.createTask({
+      id: '1',
+      title: 'Nova Tarefa',
+      completed: false,
+      createdAt: new Date()
+    });
+  };
+
+  return (
+    <Button onPress={saveTask} title="Salvar Tarefa" />
+  );
+};
+```
+
+## 🎯 Gerenciamento de Estado
+
+O gerenciamento de estado é implementado utilizando React Hooks e serviços, seguindo os princípios da Clean Architecture. Cada tela utiliza seus próprios estados locais quando necessário, e a lógica de negócios é encapsulada em serviços.
+
+### Exemplo de Implementação
+
+```typescript
+// TaskService.ts
+class TaskService {
+  static async getTasks(): Promise<Task[]> {
+    // Implementação da lógica de negócios
+  }
+
+  static async completeTask(taskId: string): Promise<void> {
+    // Implementação da lógica de negócios
+  }
+}
+
+// TaskScreen.tsx
+const TaskScreen = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const { theme } = useTheme();
+
+  const loadTasks = async () => {
+    const allTasks = await TaskService.getTasks();
+    setTasks(allTasks);
+  };
+
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
+  return (
+    <View style={{ backgroundColor: theme.colors.background }}>
+      {tasks.map(task => (
+        <TaskItem key={task.id} task={task} />
+      ))}
+    </View>
+  );
+};
+```
+
+## 🛠️ Ferramentas de Qualidade de Código
+
+O projeto utiliza ESLint e Prettier para garantir a qualidade e consistência do código. As configurações estão nos arquivos `.eslintrc.js` e `.prettierrc.js`.
+
+### Scripts Disponíveis
+
+```bash
+# Verificar problemas de código
+npm run lint
+
+# Corrigir problemas automaticamente
+npm run lint:fix
+
+# Formatar código
+npm run format
+```
+
+### Regras Principais
+
+1. **Performance**
+
+   - Uso obrigatório de `useCallback` para funções passadas como props
+   - Uso obrigatório de `useMemo` para valores computados
+   - Prevenção de re-renders desnecessários
+
+2. **Clean Code**
+
+   - Organização automática de imports
+   - Nomenclatura consistente
+   - Prevenção de código morto
+   - Uso apropriado de const/let
+
+3. **TypeScript**
+
+   - Tipagem estrita
+   - Prevenção de `any`
+   - Uso de operadores modernos (nullish coalescing, optional chaining)
+
+4. **React Native**
+   - Prevenção de estilos inline
+   - Uso apropriado de cores
+   - Otimização de textos
+
+### Exemplo de Código Otimizado
+
+```typescript
+// ❌ Não recomendado
+const MyComponent = ({ data, onPress }) => {
+  const processedData = data.map(item => item * 2);
+
+  return (
+    <TouchableOpacity onPress={() => onPress(processedData)}>
+      <Text>{processedData.join(', ')}</Text>
+    </TouchableOpacity>
+  );
+};
+
+// ✅ Recomendado
+const MyComponent = ({ data, onPress }) => {
+  const processedData = useMemo(() => data.map(item => item * 2), [data]);
+  const handlePress = useCallback(() => onPress(processedData), [onPress, processedData]);
+
+  return (
+    <TouchableOpacity onPress={handlePress}>
+      <Text>{processedData.join(', ')}</Text>
+    </TouchableOpacity>
+  );
+};
+```
+
+## 📦 Build e Deploy
+
+### Android
+
+1. Configure o ambiente Android:
+
+   - Instale o Android Studio
+   - Configure as variáveis de ambiente ANDROID_HOME e JAVA_HOME
+   - Instale o JDK 11 ou superior
+
+2. Gere o APK:
+
+```bash
+npm run android
+```
+
+### iOS
+
+1. Configure o ambiente iOS:
+
+   - Instale o Xcode
+   - Instale o CocoaPods
+   - Configure o simulador iOS
+
+2. Execute o projeto:
+
+```bash
+npm run ios
+```
 
 ## 🤝 Contribuindo
 
-1. Faça um Fork do projeto
-2. Crie uma Branch para sua Feature (`git checkout -b feature/AmazingFeature`)
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
 3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a Branch (`git push origin feature/AmazingFeature`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
 5. Abra um Pull Request
 
-## 📄 Licença
+## 📝 Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
-## ✨ Próximos Passos
+## 📚 Referências
 
-- [ ] Adicionar testes unitários
-- [ ] Implementar injeção de dependência
-- [ ] Adicionar documentação de API
-- [ ] Criar mais exemplos de implementação
-- [ ] Adicionar CI/CD
-
-## 📧 Contato
-
-Caio Lucas - [Linkedin - Caio Lucas](https://www.linkedin.com/in/caio-lucas-848653186/) - lcaio1281@gmail.com
-
-Link do Projeto: [clean-arch-template-rct-native](https://github.com/CaioLucasNS/clean-arch-template-rct-native)
+- [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+- [React Native Documentation](https://reactnative.dev/docs/getting-started)
+- [Expo Documentation](https://docs.expo.dev/)
+- [React Navigation Documentation](https://reactnavigation.org/docs/getting-started)
+- [ESLint Documentation](https://eslint.org/docs/latest/)
+- [Prettier Documentation](https://prettier.io/docs/en/)

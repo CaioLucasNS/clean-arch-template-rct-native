@@ -26,7 +26,7 @@ const TaskHistoryScreen = () => {
   useFocusEffect(
     useCallback(() => {
       loadTasks();
-    }, [])
+    }, []),
   );
 
   const handleDeleteTask = async (taskId: string) => {
@@ -50,7 +50,7 @@ const TaskHistoryScreen = () => {
             }
           },
         },
-      ]
+      ],
     );
   };
 
