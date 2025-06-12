@@ -1,18 +1,11 @@
-import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useTheme } from "@shared/theme/ThemeContext";
-import { Task } from "@core/models/Task";
-import { TaskService } from "@core/services/TaskService";
-import { Ionicons } from "@expo/vector-icons";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '@shared/theme/ThemeContext';
+import { Task } from '@core/models/Task';
+import { TaskService } from '@core/services/TaskService';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 const HomeScreen = () => {
   const { theme } = useTheme();
@@ -21,7 +14,7 @@ const HomeScreen = () => {
 
   const loadTasks = async () => {
     const allTasks = await TaskService.getTasks();
-    setTasks(allTasks.filter((task) => !task.isCompleted));
+    setTasks(allTasks.filter(task => !task.isCompleted));
   };
 
   useFocusEffect(
@@ -35,33 +28,19 @@ const HomeScreen = () => {
       await TaskService.completeTask(taskId);
       loadTasks();
     } catch (error) {
-      Alert.alert("Erro", "Não foi possível completar a task");
+      Alert.alert('Erro', 'Não foi possível completar a task');
     }
   };
 
   const renderItem = ({ item }: { item: Task }) => (
     <View style={[styles.taskCard, { backgroundColor: theme.colors.card }]}>
-      <TouchableOpacity
-        style={styles.checkbox}
-        onPress={() => handleCompleteTask(item.id)}
-      >
-        <Ionicons
-          name="checkbox-outline"
-          size={24}
-          color={theme.colors.primary}
-        />
+      <TouchableOpacity style={styles.checkbox} onPress={() => handleCompleteTask(item.id)}>
+        <Ionicons name="checkbox-outline" size={24} color={theme.colors.primary} />
       </TouchableOpacity>
       <View style={styles.taskInfo}>
-        <Text style={[styles.taskTitle, { color: theme.colors.text }]}>
-          {item.title}
-        </Text>
+        <Text style={[styles.taskTitle, { color: theme.colors.text }]}>{item.title}</Text>
         {item.description && (
-          <Text
-            style={[
-              styles.taskDescription,
-              { color: theme.colors.onSurfaceVariant },
-            ]}
-          >
+          <Text style={[styles.taskDescription, { color: theme.colors.onSurfaceVariant }]}>
             {item.description}
           </Text>
         )}
@@ -70,27 +49,18 @@ const HomeScreen = () => {
   );
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: theme.colors.background }]}
-    >
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={styles.content}>
-        <Text style={[styles.title, { color: theme.colors.text }]}>
-          Minhas Tarefas - Rayelly
-        </Text>
+        <Text style={[styles.title, { color: theme.colors.text }]}>Minhas Tarefas</Text>
 
         <FlatList
           data={tasks}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           contentContainerStyle={styles.listContainer}
           ListEmptyComponent={
             <View style={styles.emptyContainer}>
-              <Text
-                style={[
-                  styles.emptyText,
-                  { color: theme.colors.onSurfaceVariant },
-                ]}
-              >
+              <Text style={[styles.emptyText, { color: theme.colors.onSurfaceVariant }]}>
                 Nenhuma tarefa pendente
               </Text>
             </View>
@@ -100,7 +70,7 @@ const HomeScreen = () => {
 
       <TouchableOpacity
         style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
-        onPress={() => navigation.navigate("CreateTask")}
+        onPress={() => navigation.navigate('CreateTask')}
       >
         <Ionicons name="add" size={24} color="#FFFFFF" />
         <Text style={styles.addButtonText}>Nova Task</Text>
@@ -119,19 +89,19 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 16,
   },
   listContainer: {
     flexGrow: 1,
   },
   taskCard: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 16,
     borderRadius: 12,
     marginBottom: 12,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -148,7 +118,7 @@ const styles = StyleSheet.create({
   },
   taskTitle: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: '600',
     marginBottom: 4,
   },
   taskDescription: {
@@ -156,25 +126,25 @@ const styles = StyleSheet.create({
   },
   emptyContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingVertical: 32,
   },
   emptyText: {
     fontSize: 16,
-    textAlign: "center",
+    textAlign: 'center',
   },
   addButton: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 24,
     right: 24,
     left: 24,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     padding: 16,
     borderRadius: 12,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -184,9 +154,9 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   addButtonText: {
-    color: "#FFFFFF",
+    color: '#FFFFFF',
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: '600',
     marginLeft: 8,
   },
 });
